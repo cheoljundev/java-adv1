@@ -27,6 +27,7 @@ public class BoundedQueueV3 implements BoundedQueue {
             }
         }
         queue.offer(data);
+        log("[put] 생산자 데이터 저장, notify() 호출");
         notify(); //WAITING -> BLOCKED
     }
 
