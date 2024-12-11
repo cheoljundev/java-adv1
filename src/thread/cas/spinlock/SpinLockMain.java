@@ -1,10 +1,12 @@
 package thread.cas.spinlock;
 
 import static util.MyLogger.log;
+import static util.ThreadUtils.sleep;
 
 public class SpinLockMain {
     public static void main(String[] args) {
-        SpinLockBad spinLock = new SpinLockBad();
+//        SpinLockBad spinLock = new SpinLockBad();
+        SpinLock spinLock = new SpinLock();
 
         Runnable task = new Runnable() {
             @Override
@@ -13,6 +15,7 @@ public class SpinLockMain {
                 try {
                     // critical section
                     log("비즈니스 로직 실행");
+                    //sleep(1); // 오래 걸리는 로직에서는 스핀락 사용 X
                 } finally {
                     spinLock.unlock();
                 }
