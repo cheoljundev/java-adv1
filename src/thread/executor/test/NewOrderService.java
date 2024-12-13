@@ -9,12 +9,12 @@ import static util.ThreadUtils.sleep;
 public class NewOrderService {
 
     public void order(String orderNo) throws InterruptedException, ExecutionException {
-        ExecutorService es = Executors.newFixedThreadPool(10);
+        //ExecutorService es = Executors.newFixedThreadPool(10);
         InventoryWork inventoryWork = new InventoryWork(orderNo);
         ShippingWork shippingWork = new ShippingWork(orderNo);
         AccountingWork accountingWork = new AccountingWork(orderNo);
 
-        try {
+        try (ExecutorService es = Executors.newFixedThreadPool(10)){
             // 작업 요청
             Future<Boolean> inventoryFuture = es.submit(inventoryWork);
             Future<Boolean> shippingFuture = es.submit(shippingWork);
@@ -31,7 +31,7 @@ public class NewOrderService {
                 log("일부 작업이 실패했습니다.");
             }
         } finally {
-            es.close();
+            //es.close();
         }
 
     }
